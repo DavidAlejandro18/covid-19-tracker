@@ -42,7 +42,6 @@ fetch(activos)
     })
     .catch((err) => console.log(err));
 
-
 // Obtener todo tipo de casos dependiendo del país
 var select = document.getElementById('paises');
 
@@ -55,7 +54,6 @@ fetch(opcionesPaises)
             let contenido = `${localidad.location}`;
             opcion.appendChild(document.createTextNode(contenido));
             select.appendChild(opcion);
-            
         });
     })
     .catch((err) => console.log(err));
@@ -64,7 +62,6 @@ fetch(opcionesPaises)
 select.addEventListener('change',
   function() {
     let selectedOption = this.options[select.selectedIndex];
-    /* console.log(selectedOption.value); */
     fetch(paises + selectedOption.text)
         .then((response) => response.json())
         .then((data) => {
