@@ -11,6 +11,8 @@ fetch(confirmados)
     .then((response) => response.json())
     .then((data) => {
         let datosConfirmados = document.getElementById('confirmados');
+        let actualizacion = document.getElementById('update');
+        actualizacion.innerHTML = `Fecha: ${data.dt}`;
         datosConfirmados.innerHTML = `<span class = "badge badge-pill badge-danger"><i class="fas fa-biohazard"></i> ${formatNumber(data.data)}</span>`;
     })
     .catch((err) => console.log(err));
@@ -42,6 +44,22 @@ fetch(activos)
     })
     .catch((err) => console.log(err));
 
+// Se crea el ranking de cada país
+var lista = document.getElementById('ranking');
+fetch(opcionesPaises)
+    .then((response) => response.json())
+    .then((data) => {
+        data.data.map((valor) => {
+            let item = document.createElement("li");
+            item.className += "list-group-item d-flex justify-content-between align-items-center lista";
+            item.innerHTML = `${valor.location} <span class = "badge badge-danger badge-pill">${formatNumber(valor.confirmed)}</span>`;
+
+            lista.appendChild(item);
+        })
+    })
+    .catch((err) => console.log(err));
+
+
 // Obtener todo tipo de casos dependiendo del país
 var select = document.getElementById('paises');
 
@@ -51,8 +69,8 @@ fetch(opcionesPaises)
     .then((data) => {
         data.data.map((localidad) => {
             let opcion = document.createElement("option");
-            let contenido = `${localidad.location}`;
-            opcion.appendChild(document.createTextNode(contenido));
+            opcion.innerHTML = `${localidad.location}`;
+
             select.appendChild(opcion);
         });
     })

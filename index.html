@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="index.html">
         <i class="fas fa-shield-virus fa-lg"></i>
@@ -34,7 +35,9 @@
 
     <!-- Contenedor -->
     <div class="container" id="container">
-      <h2 class="mt-4">Casos globales</h2>
+
+      <!-- Se muestra la fecha y hora de actualización de la información -->
+      <h2 class="mt-4">Casos globales - <span class="badge badge-pill badge-primary" id="update"></span></h2>
       <!-- Primera celda -->
         <div class="row">
           <div class="col-sm mt-4">
@@ -75,17 +78,35 @@
           </div>
         </div>
 
+        <!-- Ranking -->
+        <h2 class="mt-4">Ranking de contagios</h2>
+
+        <!-- Toggle del ranking -->
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Ver la lista completa
+          </button>
+        </p>
+
+        <!-- Lista completa -->
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <ul class="list-group mt-4 mb-4" id="ranking"></ul>
+          </div>
+        </div>
+
+        <!-- Select de los paises -->
         <h2 class="mt-4">Selecciona un país</h2>
 
-        <div class="input-group">
-          <select name="paises" id="paises" class="custom-select mb-1">
+        <div class="input-group ">
+          <select name="paises" id="paises" class="custom-select mb-2">
             <option selected disabled id = "first">Choose...</option>
           </select>
         </div>
 
+        <!-- Resultado del país seleccionado -->
         <div id="resultado"></div>
     </div>
-
 
     <script src="main.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
