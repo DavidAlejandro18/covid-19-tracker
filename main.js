@@ -1,46 +1,28 @@
-var confirmados = 'https://covid2019-api.herokuapp.com/v2/confirmed';
-var muertos = 'https://covid2019-api.herokuapp.com/v2/deaths';
-var recuperados = 'https://covid2019-api.herokuapp.com/v2/recovered';
-var activos = 'https://covid2019-api.herokuapp.com/v2/active';
 var total = 'https://covid2019-api.herokuapp.com/v2/total';
 var paises = 'https://covid2019-api.herokuapp.com/v2/country/';
 var opcionesPaises = 'https://covid2019-api.herokuapp.com/v2/current';
 
-// Casos confirmados
-fetch(confirmados)
+// Total de casos
+fetch(total)
     .then((response) => response.json())
     .then((data) => {
+        // Se obtienen e imprimen los casos confirmados y la fecha de actualización
         let datosConfirmados = document.getElementById('confirmados');
         let actualizacion = document.getElementById('update');
         actualizacion.innerHTML = `Fecha: ${data.dt}`;
-        datosConfirmados.innerHTML = `<span class = "badge badge-pill badge-danger"><i class="fas fa-biohazard"></i> ${formatNumber(data.data)}</span>`;
-    })
-    .catch((err) => console.log(err));
+        datosConfirmados.innerHTML = `<span class = "badge badge-pill badge-danger"><i class="fas fa-biohazard"></i> ${formatNumber(data.data.confirmed)}</span>`;
 
-// Casos de defunciones
-fetch(muertos)
-    .then((response) => response.json())
-    .then((data) => {
+        // Se obtienen e imprimen los casos de defunciones
         let datosMuertos = document.getElementById('muertos');
-        datosMuertos.innerHTML = `<span class = "badge badge-pill badge-secondary"><i class="fas fa-skull-crossbones"></i> ${formatNumber(data.data)}</span>`;
-    })
-    .catch((err) => console.log(err));
+        datosMuertos.innerHTML = `<span class = "badge badge-pill badge-secondary"><i class="fas fa-skull-crossbones"></i> ${formatNumber(data.data.deaths)}</span>`;
 
-// Casos recuperados
-fetch(recuperados)
-    .then((response) => response.json())
-    .then((data) => {
+        // Se obtienen e imprimen los casos de recuperados
         let datosRecuperados = document.getElementById('recuperados');
-        datosRecuperados.innerHTML = `<span class = "badge badge-pill badge-success"><i class="fas fa-syringe"></i> ${formatNumber(data.data)}</span>`
-    })
-    .catch((err) => console.log(err));
+        datosRecuperados.innerHTML = `<span class = "badge badge-pill badge-success"><i class="fas fa-syringe"></i> ${formatNumber(data.data.recovered)}</span>`;
 
-// Casos activos
-fetch(activos)
-    .then((response) => response.json())
-    .then((data) => {
+        // Se obtienen e imprimen los casos activos
         let datosActivos = document.getElementById('activos');
-        datosActivos.innerHTML = `<span class = "badge badge-pill badge-warning"><i class="fas fa-head-side-virus"></i> ${formatNumber(data.data)}</span>`;
+        datosActivos.innerHTML = `<span class = "badge badge-pill badge-warning"><i class="fas fa-head-side-virus"></i> ${formatNumber(data.data.active)}</span>`;
     })
     .catch((err) => console.log(err));
 
