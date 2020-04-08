@@ -1,10 +1,14 @@
 var total = 'https://covid2019-api.herokuapp.com/v2/total';
 var paises = 'https://covid2019-api.herokuapp.com/v2/country/';
 var opcionesPaises = 'https://covid2019-api.herokuapp.com/v2/current';
+// Posible nueva API
+// https://covid19-info.app/api/
+// devuelve: {"lastUpdate":"2020-04-04T02:23:22.000Z","confirmed":{"value":1099389},"recovered":{"value":226603},"deaths":{"value":58901}}
+// https://covid19-info.app/api/confirmed?level=countryRegion
+// devuelve toda la informacion de todos los pasies [país, actualizacion, lat, long, confirmados, muertos, recuperados, activos, ...]
 
 // Total de casos
-fetch(total)
-    .then((response) => response.json())
+casosTotales()
     .then((data) => {
         // Se obtienen e imprimen los casos confirmados y la fecha de actualización
         let datosConfirmados = document.getElementById('confirmados');
@@ -24,12 +28,16 @@ fetch(total)
         let datosActivos = document.getElementById('activos');
         datosActivos.innerHTML = `<span class = "badge badge-pill badge-warning"><i class="fas fa-head-side-virus"></i> ${formatNumber(data.data.active)}</span>`;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
+
+async function casosTotales() {
+    const response = await fetch(total);
+    return await response.json();
+}
 
 // Se crea el ranking de cada país
 var lista = document.getElementById('ranking');
-fetch(opcionesPaises)
-    .then((response) => response.json())
+rankingList()
     .then((data) => {
         data.data.map((valor) => {
             let item = document.createElement("li");
@@ -39,15 +47,18 @@ fetch(opcionesPaises)
             lista.appendChild(item);
         })
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 
+async function rankingList() {
+    const response = await fetch(opcionesPaises);
+    return await response.json();
+}
 
 // Obtener todo tipo de casos dependiendo del país
 var select = document.getElementById('paises');
 
 // Se agregan todos los paises al select para mostrar su información
-fetch(opcionesPaises)
-    .then((response) => response.json())
+listaPaises()
     .then((data) => {
         data.data.map((localidad) => {
             let opcion = document.createElement("option");
@@ -56,14 +67,18 @@ fetch(opcionesPaises)
             select.appendChild(opcion);
         });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
+
+async function listaPaises() {
+    const response = await fetch(opcionesPaises);
+    return await response.json();
+}
 
 // Se crea un evento en el que se obtiene el dato del país que se haya seleccionado
 select.addEventListener('change',
   function() {
     let selectedOption = this.options[select.selectedIndex];
-    fetch(paises + selectedOption.text)
-        .then((response) => response.json())
+    datosPaises()
         .then((data) => {
             let resultBox = document.getElementById('resultado');
             resultBox.innerHTML = `
@@ -115,12 +130,17 @@ select.addEventListener('change',
             </div>
             `;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
+    
+    async function datosPaises() {
+        const response = await fetch(paises + selectedOption.text);
+        return await response.json();
+    }
   });
 
 // Functions
 // Función para dar formato a los numeros
 
-function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+const formatNumber = (num) => {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
