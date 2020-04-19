@@ -4,8 +4,8 @@ var timeSerie = 'https://covid2019-api.herokuapp.com/v2/timeseries/confirmed';
 // Obtener todo tipo de casos dependiendo del país
 var selectPaises = document.getElementById('paises');
 var selectProvincias = document.getElementById('provincias');
-var containerProvincias = document.getElementById("containerProvincias");
-var titleProvincia = document.getElementById('titleProvincia');
+/* var containerProvincias = document.getElementById("containerProvincias");
+var titleProvincia = document.getElementById('titleProvincia'); */
 
 // Se agregan todos los paises al selectPaises para mostrar su información
 fetch(opcionesPaises)
@@ -26,35 +26,35 @@ fetch(opcionesPaises)
 selectPaises.addEventListener("change", function() {
     let selectedOption = this.options[selectPaises.selectedIndex];
     
+    while (selectProvincias.firstChild) {
+        selectProvincias.removeChild(selectProvincias.firstChild);
+    }
+
     series()
         .then((data) => {
             data.data.map((paises) => {
                 if(paises['Country/Region'] == selectedOption.text) {
-                    //console.info("El país es el mismo");
                     if (paises['Province/State'] == "") {
-                        //console.info("Y no tiene provincias");
-                        containerProvincias.style.display = "none";
-                        titleProvincia.style.display = "none";
-
-                        while (selectProvincias.firstChild) {
-                            selectProvincias.removeChild(selectProvincias.firstChild);
-                        }
-                    } else {
-                        //console.info(`Provincia: ${paises['Province/State']}`);
                         let opcion = document.createElement("option");
-                        opcion.innerHTML = `${paises['Province/State']}`;
-
+                        opcion.innerHTML = "No hay provincias disponibles";
+                        
                         selectProvincias.appendChild(opcion);
 
-                        containerProvincias.style.display = "block";
-                        titleProvincia.style.display = "block";
+                        selectProvincias.setAttribute("disabled", "");
+                    } else {
+                        let opcion = document.createElement("option");
+                        opcion.innerHTML = `${paises['Province/State']}`;
+                        
+                        selectProvincias.appendChild(opcion);
+                        
+                        selectProvincias.removeAttribute("disabled");
                     }
                 }
             });
         })
         .catch((err) => console.error(err));
 });
-    
+
 async function series() {
     const response = await fetch(timeSerie);
     return await response.json();
