@@ -1,7 +1,11 @@
 .lista {
-    font-size: 1.6em;
+  font-size: 1.6em;
 }
 
 .provincias {
-    display: none;
+  display: none;
+}
+
+.preloader, #myChart {
+  display: none;
 }

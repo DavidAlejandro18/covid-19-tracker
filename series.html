@@ -51,19 +51,27 @@
     <div class="row">
       <div class="input-group col-8">
         <select name="paises" id="paises" class="custom-select mb-2">
-          <option selected disabled id = "first">Choose...</option>
+          <option selected disabled id="first">Choose...</option>
         </select>
       </div>
 
       <div class="input-group col-4" id="containerProvincias">
         <select name="provincias" id="provincias" class="custom-select mb-2" disabled>
-          <option selected disabled id = "first">Choose...</option>
+          <option selected disabled id="first">Choose...</option>
         </select>
       </div>
     </div>
-    
+
     <button type="button" class="btn btn-primary" id="buscar" disabled>Buscar</button>
-    
+
+    <div class="preloader" id="preloader">
+      <div class="text-center mt-4">
+        <div class="spinner-border" style="width: 6rem; height: 6rem;" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+
     <div class="chart-container">
       <canvas id="myChart"></canvas>
     </div>
