@@ -12,13 +12,20 @@ var preloader = document.getElementById('preloader');
 // Obtener el contenedor de la gráfica
 var chart = document.getElementById('myChart');
 
+var arrayPaises = [];
+
 // Se agregan todos los paises al selectPaises para mostrar su información
 fetch(opcionesPaises)
     .then(response => response.json())
     .then((data) => {
         data.data.map((localidad) => {
+            arrayPaises.push(localidad.location);
+        });
+
+        // Ordena la lista de forma alfabetica
+        arrayPaises.sort().map((localidadValor) => {
             let opcion = document.createElement("option");
-            opcion.innerHTML = `${localidad.location}`;
+            opcion.innerHTML = `${localidadValor}`;
 
             selectPaises.appendChild(opcion);
         });

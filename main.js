@@ -39,10 +39,10 @@ async function casosTotales() {
 var lista = document.getElementById('ranking');
 rankingList()
     .then((data) => {
-        data.data.map((valor) => {
+        data.data.map((valor, index) => {
             let item = document.createElement("li");
             item.className += "list-group-item d-flex justify-content-between align-items-center lista";
-            item.innerHTML = `${valor.location} <span class = "badge badge-danger badge-pill">${formatNumber(valor.confirmed)}</span>`;
+            item.innerHTML = `${(index + 1)} - ${valor.location} <span class = "badge badge-danger badge-pill">${formatNumber(valor.confirmed)}</span>`;
 
             lista.appendChild(item);
         })
